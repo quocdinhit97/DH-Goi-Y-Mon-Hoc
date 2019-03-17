@@ -1,0 +1,103 @@
+﻿
+@{
+	ViewBag.Title = "Details";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="card text-center">
+	<div class="page-header" style="margin:7px">
+		<h3 class="page-title">
+			Chương trình đào tạo: @ViewBag.CTDT
+		</h3>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="@Url.Action("index","Lop")">Lớp</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Chương trình đào tạo</li>
+			</ol>
+		</nav>
+	</div>
+</div>
+@{
+	if (Enumerable.Count(ViewBag.DetailLop) > 0)
+	{
+		<div class="card" style="margin-top: 30px">
+			<div class="card-body">
+				<table class="table table-hover nowrap" id="example" style="width:100%">
+					<thead>
+						<tr>
+							<th>Học kì</th>
+							<th>Mã môn học</th>
+							<th>Tên môn học</th>
+							<th>Số tính chỉ</th>
+							<th>Lý thuyết</th>
+							<th>Thực hành</th>
+							<th>Ghi chú</th>
+							<th>CTDT</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						@foreach (var item in ViewBag.DetailLop)
+
+						{
+							<tr>
+								<td>@item.Ma_HK</td>
+								<td>@item.Ma_Mon</td>
+								<td>@item.Ten_Mon</td>
+								<td>@item.So_TC</td>
+								<td>@item.TC_LyThuyet</td>
+								<td>@item.TC_ThucHanh</td>
+								<td>@item.Ghi_Chu</td>
+								<td>@item.Ma_CTDT</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	}
+	else
+	{
+		<div class="card" style="margin-top: 30px">
+			<div class="card-body">
+				<table class="table table-hover nowrap" id="example" style="width:100%">
+					<thead>
+						<tr>
+							<th>Học kì</th>
+							<th>Mã môn học</th>
+							<th>Tên môn học</th>
+							<th>Số tính chỉ</th>
+							<th>Lý thuyết</th>
+							<th>Thực hành</th>
+							<th>Ghi chú</th>
+							<th>CTDT</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td colspan="8">Chọn Chương trình đào tạo</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	}
+}
+
+
+@section ClientScript{
+	<script>
+		$(document).ready(function () {
+			var table = $('#example').DataTable({
+				responsive: true,
+				"lengthMenu": [[20, 40, 50, -1], [20, 40, 50, "All"]],
+				"pagingType": "first_last_numbers",
+				"showNEntries": false,
+				"bInfo": false,
+				"autoWidth": true
+			});
+
+		});
+
+	</script>
+}
+
+
+

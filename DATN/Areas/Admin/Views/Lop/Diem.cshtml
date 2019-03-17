@@ -1,0 +1,275 @@
+﻿
+@{
+	ViewBag.Title = "Diem";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card text-center">
+	<div class="page-header" style="margin:7px">
+		<h3 class="page-title">
+			Danh sách điểm: @ViewBag.MaSV
+		</h3>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active">Điểm /</li>
+				<li class="breadcrumb-item active" style="padding-left:0">@ViewBag.MaSV /</li>
+				<li class="breadcrumb-item" style="padding-left: 0"><a href="@Url.Action("index","Lop")">Lớp</a></li>
+
+			</ol>
+		</nav>
+	</div>
+</div>
+
+<div class="card text-center" style="margin-top: 20px">
+	<div class="page-header" style="margin:10px">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="margin-left: 45px">
+				<li class="breadcrumb-item active" id="item0"><button type="button" class="btn btn-outline-dark btn-rounded btn-fw font-fam">Toàn bộ điểm</button></li>
+
+				<li class="breadcrumb-item active" id="item3"><button type="button" class="btn btn-outline-success btn-rounded btn-fw font-fam">Điểm A</button></li>
+
+				<li class="breadcrumb-item active" id="item4"><button type="button" class="btn btn-outline-info btn-rounded btn-fw font-fam">Điểm B</button></li>
+
+				<li class="breadcrumb-item active" id="item5"><button type="button" class="btn btn-outline-primary btn-rounded btn-fw font-fam">Điểm C</button></li>
+
+				<li class="breadcrumb-item active" id="item2"><button type="button" class="btn btn-outline-warning btn-rounded btn-fw font-fam">Cần cải thiện</button></li>
+
+				<li class="breadcrumb-item active" id="item1"><button type="button" class="btn btn-outline-danger btn-rounded btn-fw font-fam">Chưa đạt</button></li>
+
+
+
+			</ol>
+		</nav>
+	</div>
+</div>
+
+<div class="card" style=" margin-top:20px">
+	<div class="card-body">
+		<table class="table table-hover nowrap" id="example" style="width:100%">
+			<thead>
+				<tr>
+					<th>Mã môn</th>
+					<th>Tên môn</th>
+					<th>Học kì</th>
+					<th>Số TC</th>
+
+					@*<th>%Thi</th>*@
+					<th>
+						Thi L1
+					</th>
+					<th>
+						Thi L2
+					</th>
+					<th>
+						Thi L3
+					</th>
+					<th>
+						TK(10)
+					</th>
+					<th class="tkch">
+						TK(CH)
+					</th>
+					<th>
+						KQ1
+					</th>
+					<th class="kq">
+						KQ
+					</th>
+					<th>
+						Ghi chú
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in ViewBag.GetDiem)
+				{
+					//if (@item._KQ1 == "Đạt")
+					//{
+					if (item.KQ == "X")
+					{
+						<tr class="table-danger">
+
+							<td>@item.MaMon</td>
+							<td>@item.TenMon</td>
+							<td>@item.HocKi</td>
+							<td>@item.TinChi</td>
+							<td>@item.ThiL1</td>
+							<td>@item.ThiL2</td>
+							<td>@item.ThiL3</td>
+							<td>@item.TK10</td>
+							<td>@item.TKCH</td>
+							<td>@item.KQ1</td>
+							<td>@item.KQ</td>
+							<td>@item.GhiChu</td>
+						</tr>
+					}
+					else if (item.TKCH == "D" || item.TKCH == "C")
+					{
+						<tr class="table-warning">
+
+							<td>@item.MaMon</td>
+							<td>@item.TenMon</td>
+							<td>@item.HocKi</td>
+							<td>@item.TinChi</td>
+							<td>@item.ThiL1</td>
+							<td>@item.ThiL2</td>
+							<td>@item.ThiL3</td>
+							<td>@item.TK10</td>
+							<td>@item.TKCH</td>
+							<td>@item.KQ1</td>
+							<td>@item.KQ</td>
+							<td>@item.GhiChu</td>
+						</tr>
+					}
+
+					else
+					{
+						<tr>
+							<td>@item.MaMon</td>
+							<td>@item.TenMon</td>
+							<td>@item.HocKi</td>
+							<td>@item.TinChi</td>
+							<td>@item.ThiL1</td>
+							<td>@item.ThiL2</td>
+							<td>@item.ThiL3</td>
+							<td>@item.TK10</td>
+							<td>@item.TKCH</td>
+							<td>@item.KQ1</td>
+							<td>@item.KQ</td>
+							<td>@item.GhiChu</td>
+						</tr>
+					}
+
+
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+@section ClientScript{
+
+	<script>
+
+		$(document).ready(function () {
+			var table = $('#example').DataTable({
+				responsive: true,
+				"lengthMenu": [[20, 30, 50, -1], [20, 30, 50, "All"]],
+				"pagingType": "first_last_numbers",
+				"showNEntries": false,
+				"bInfo": false,
+				"autoWidth": true,
+			});
+
+
+			$("#item1").on("click", function () {
+				table
+					.search('')
+					.columns().search('')
+					.draw();
+
+				table.column(".kq").search("X").draw();
+
+			});
+
+			$("#item2").on("click", function () {
+				table
+					.search('')
+					.columns().search('')
+					.draw();
+
+				table.column(".tkch").search("D").draw();
+
+			});
+
+			$("#item3").on("click", function () {
+				table
+					.search('')
+					.columns().search('')
+					.draw();
+
+				table.column(".tkch").search("A").draw();
+
+			});
+
+			$("#item4").on("click", function () {
+				table
+					.search('')
+					.columns().search('')
+					.draw();
+
+				table.column(".tkch").search("B").draw();
+
+			});
+
+			$("#item5").on("click", function () {
+				table
+					.search('')
+					.columns().search('')
+					.draw();
+
+				table.column(".tkch").search("C").draw();
+
+			});
+
+			$("#item0").on("click", function () {
+
+				table
+					.search('')
+					.columns().search('')
+					.draw();
+
+			});
+		});
+
+	</script>
+}
+
+
+<style>
+	.table-warning, .table-warning > th, .table-warning > td {
+		background: #ffe76e;
+	}
+
+	.btn-fw {
+		min-width: 80px;
+	}
+
+	.font-fam {
+		font-family: serif;
+		font-size: 15px;
+	}
+	/*#item1 {
+			background: #ff6889;
+			color: white;
+			padding: 5px;
+			border-radius: 5px;
+			margin-right: 10px;
+			cursor: pointer;
+		}
+
+		#item2 {
+			background: #ffe76e;
+			color: white;
+			padding: 5px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		#item0 {
+			margin-right: 10px;
+			background: #808080;
+			color: chartreuse;
+			padding: 5px;
+			border-radius: 5px;
+			cursor: pointer;
+		}*/
+
+	.breadcrumb-item + .breadcrumb-item::before {
+		content: ""
+	}
+
+	.blocker {
+		z-index: 99;
+	}
+</style>

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DoAnTotNghiep_Temp_2" Class="DataTVUDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=DoAnTotNghiep_Temp_2;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DoAnTotNghiep_Temp_2ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Account" Member="Accounts">
+    <Type Name="Account">
+      <Column Name="AccountID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Pass" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Roles" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SINHVIEN" Member="SINHVIENs">
+    <Type Name="SINHVIEN">
+      <Column Name="Ma_SV" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ten_SV" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Dia_Chi" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="VarChar(12)" CanBeNull="true" />
+      <Column Name="Ma_Lop" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="SINHVIEN_DIEM" Member="DIEMs" ThisKey="Ma_SV" OtherKey="Ma_SV" Type="DIEM" />
+      <Association Name="LOP_SINHVIEN" Member="LOP" ThisKey="Ma_Lop" OtherKey="Ma_Lop" Type="LOP" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CTDT" Member="CTDTs">
+    <Type Name="CTDT">
+      <Column Name="Ma_CTDT" Type="System.String" DbType="VarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ten_CTDT" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="CTDT_LOP" Member="LOPs" ThisKey="Ma_CTDT" OtherKey="Ma_CTDT" Type="LOP" />
+      <Association Name="CTDT_MON" Member="MONs" ThisKey="Ma_CTDT" OtherKey="Ma_CTDT" Type="MON" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DIEM" Member="DIEMs">
+    <Type Name="DIEM">
+      <Column Name="ID_Diem" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PT_KT" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PT_Thi" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Thi_L1" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Thi_L2" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Thi_L3" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TK10" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TKCH" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="KQ1" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="KQ" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Ghi_Chu" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ID_Mon" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ma_SV" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="SINHVIEN_DIEM" Member="SINHVIEN" ThisKey="Ma_SV" OtherKey="Ma_SV" Type="SINHVIEN" IsForeignKey="true" />
+      <Association Name="MON_DIEM" Member="MON" ThisKey="ID_Mon" OtherKey="ID_Mon" Type="MON" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HOCKI" Member="HOCKIs">
+    <Type Name="HOCKI">
+      <Column Name="Ma_HK" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ten_HK" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="HOCKI_MON" Member="MONs" ThisKey="Ma_HK" OtherKey="Ma_HK" Type="MON" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lich" Member="Liches">
+    <Type Name="Lich">
+      <Column Name="ID_Lich" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Ma_MH" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Ten_MH" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Lop" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Thu" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Phong" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Thoi_Gian" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOP" Member="LOPs">
+    <Type Name="LOP">
+      <Column Name="Ma_Lop" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ten_Lop" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Bat" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Ma_CTDT" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Association Name="LOP_SINHVIEN" Member="SINHVIENs" ThisKey="Ma_Lop" OtherKey="Ma_Lop" Type="SINHVIEN" />
+      <Association Name="CTDT_LOP" Member="CTDT" ThisKey="Ma_CTDT" OtherKey="Ma_CTDT" Type="CTDT" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MON" Member="MONs">
+    <Type Name="MON">
+      <Column Name="ID_Mon" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Ma_Mon" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Ten_Mon" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="So_TC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TC_LyThuyet" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TC_ThucHanh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ghi_Chu" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Ma_CTDT" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Ma_HK" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Association Name="MON_DIEM" Member="DIEMs" ThisKey="ID_Mon" OtherKey="ID_Mon" Type="DIEM" />
+      <Association Name="CTDT_MON" Member="CTDT" ThisKey="Ma_CTDT" OtherKey="Ma_CTDT" Type="CTDT" IsForeignKey="true" />
+      <Association Name="HOCKI_MON" Member="HOCKI" ThisKey="Ma_HK" OtherKey="Ma_HK" Type="HOCKI" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

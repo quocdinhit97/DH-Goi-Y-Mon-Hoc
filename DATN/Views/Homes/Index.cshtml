@@ -1,0 +1,178 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Share/_Layout.cshtml";
+}
+
+<div class="page-header">
+	<h3 class="page-title">
+		<span class="page-title-icon bg-gradient-primary text-white mr-2">
+			<i class="mdi mdi-home"></i>
+		</span>
+		Thống kê
+	</h3>
+	<nav aria-label="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="breadcrumb-item active" aria-current="page">
+				@*<span></span>Overview
+					<i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>*@
+			</li>
+		</ul>
+	</nav>
+</div>
+
+@if (TempData["Diem_ERR"] != null)
+{
+	<div class="card text-center" style="background:none; margin-top: 20px" id="err_alert">
+		<div class="alert alert-warning alert-dismissible fade show" style="margin-bottom:0; padding:20px">
+			<strong>Thông báo: </strong> @Html.Raw(TempData["Diem_ERR"]) - <strong class="capnhat">Cập nhật ngay</strong>
+			<button type="button" class="close" id="close_alert">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+}
+else
+{
+	<div class="row">
+		<div class="col-lg-6 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">Thống kê môn theo điểm</h4>
+					<canvas id="barCharts" style="height:230px"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">Số tín chỉ đạt và chưa đạt</h4>
+					<canvas id="pieChart" style="height:250px"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}
+
+
+@section ClientScript{
+	<script>
+
+		$('.capnhat').click(function () {
+			$('#ex1').modal({
+				showClose: false,
+				fadeDuration: 200,
+			});
+		});
+
+		var labelArray = @Html.Raw(Json.Encode(ViewBag.lable));
+		var dataArray =  @Html.Raw(Json.Encode(ViewBag.count));
+
+		var lbArray = @Html.Raw(Json.Encode(ViewBag.lb));
+		var dtArray =  @Html.Raw(Json.Encode(ViewBag.diem));
+
+		if ($("#barCharts").length) {
+			var barChartCanvas = $("#barCharts").get(0).getContext("2d");
+			// This will get the first returned node in the jQuery collection.
+			var barChart = new Chart(barChartCanvas, {
+
+				type: 'bar',
+				data: {
+					labels: labelArray,
+					datasets: [{
+						label: "Số môn",
+						data: dataArray,
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+							'rgba(255,99,132,1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)'
+						],
+						borderWidth: 1,
+						fill: false
+					}],
+
+				},
+				options: options
+			});
+		}
+		var options = {
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			},
+			legend: {
+				display: false
+			},
+			elements: {
+				point: {
+					radius: 0
+				}
+			}
+
+		};
+
+		var areaOptions = {
+			plugins: {
+				filler: {
+					propagate: true
+				}
+			}
+		}
+
+		if ($("#pieChart").length) {
+			var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+			var pieChart = new Chart(pieChartCanvas, {
+				type: 'pie',
+				data: {
+					labels: lbArray,
+					datasets: [{
+						label: "Listen",
+						data: dtArray,
+						backgroundColor: [
+
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)'
+						],
+						borderWidth: 1,
+						fill: true
+					}],
+				},
+				options: areaOptions
+			});
+		}
+	</script>
+}
+
+<style>
+	.capnhat{
+		cursor: pointer;
+		text-decoration: underline;
+	}
+</style>
+

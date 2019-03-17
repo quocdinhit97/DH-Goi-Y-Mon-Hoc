@@ -1,0 +1,118 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card text-center">
+	<div class="page-header" style="margin:7px">
+		<h3 class="page-title">
+			Lịch môn học
+		</h3>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active">Index</li>
+				<li class="breadcrumb-item active">Lịch</li>
+
+			</ol>
+		</nav>
+	</div>
+</div>
+
+@*Show lỗi*@
+@{
+	if (TempData["file_lich"] != null)
+	{
+		<div class="card text-center" style="background:none; margin-top: 20px" id="err_alert">
+			<div class="alert alert-danger alert-dismissible fade show" style="margin-bottom:0; padding:20px">
+				<strong>Lỗi: </strong> @Html.Raw(TempData["file_lich"])
+				<button type="button" class="close" id="close_alert">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	}
+
+}
+
+@*show dữ liệu*@
+@{
+
+	<div class="card" style="margin-top: 30px">
+		<div class="card-body">
+			<table class="table table-hover nowrap" id="example" style="width:100%">
+				<thead>
+					<tr>
+						<th>#ID</th>
+						<th>Mã Môn</th>
+						<th>Tên Môn</th>
+						<th>Lớp</th>
+						<th>Thứ</th>
+						<th>Phòng</th>
+						<th>Thời gian</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					@foreach (var item in ViewBag.Lich)
+
+					{
+						<tr>
+							<td>@item.ID_Lich</td>
+							<td>@item.Ma_MH</td>
+							<td>@item.Ten_MH</td>
+							<td>@item.Lop</td>
+							<td>@item.Thu</td>
+							<td>@item.Phong</td>
+							<td>@item.Thoi_Gian</td>
+
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+}
+
+@*javascript*@
+
+@section ClientScript{
+	<script>
+		$(document).ready(function () {
+			var table = $('#example').DataTable({
+				responsive: true,
+				"lengthMenu": [[20, 40, 50, -1], [20, 40, 50, "All"]],
+				"pagingType": "first_last_numbers",
+				"showNEntries": false,
+				"bInfo": false,
+				"autoWidth": true
+			});
+			//$("#search_input").on("keyup", function () {
+			//	table.columns('.ctdt').search(this.value).draw();
+
+			//});
+		});
+
+		
+
+		$('#close_alert').click(function () {
+			$('#err_alert').fadeTo(100, 500).slideUp(500, function () {
+				$("#err_alert").alert('close');
+			});
+		});
+	
+
+		function showDialog() {
+			$('#ex1').modal({
+				showClose: false,
+				fadeDuration: 200,
+			});
+		}
+
+	</script>
+}
+
+
+
+

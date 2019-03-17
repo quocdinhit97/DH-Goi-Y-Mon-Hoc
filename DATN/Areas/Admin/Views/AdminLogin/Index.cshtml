@@ -1,0 +1,62 @@
+﻿
+@model DATN.Account
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Đăng nhập - Admin</title>
+	<link href="~/Assets/css/StyleLogin.css" rel="stylesheet" />
+	<link href="~/Assets/Select2/select2.min.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
+	<script src="~/Assets/Select2/select2.min.js"></script>
+	<link rel="shortcut icon" href="~/Assets/images/seo.png" />
+</head>
+<body>
+	<div class="login-wrap">
+		<div class="login-html">
+
+			<input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Đăng nhập</label>
+			<div class="login-form">
+				@using (Html.BeginForm("Login", "AdminLogin", FormMethod.Post))
+				{
+					@Html.AntiForgeryToken();
+					<div class="sign-up-htm">
+						<div class="group">
+							@Html.Raw(TempData["Login_ERR"])
+						</div>
+						<div class="group">
+							<label for="user" class="label">Username</label>
+
+							@Html.TextBoxFor(model => model.Email, new { @class = " input" })
+						</div>
+						<div class="group">
+							<label for="user" class="label">Password</label>
+
+							@Html.TextBoxFor(model => model.Pass, new { @class = " input" })
+						</div>
+						<div class="group">
+							<input type="submit" class="button btn-dn" value="Đăng nhập">
+						</div>
+						<div class="hr"></div>
+					</div>
+				}
+
+			</div>
+		</div>
+	</div>
+	<style>
+		.btn-dn {
+			cursor: pointer;
+		}
+		.login-form .group .btn-dn:hover {
+			background: #0094ff;
+		}
+	</style>
+</body>
+
+</html>

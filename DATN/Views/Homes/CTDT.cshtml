@@ -1,0 +1,93 @@
+﻿@model DATN.SINHVIEN
+@{
+	ViewBag.Title = "CTDT";
+	Layout = "~/Views/Share/_Layout.cshtml";
+}
+
+<div class="card text-center">
+	<div class="page-header" style="margin:7px">
+		<h3 class="page-title">
+			Chương trình đào tạo: @Session["lop"].ToString()
+		</h3>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active" aria-current="page">Chương trình đào tạo</li>
+			</ol>
+		</nav>
+	</div>
+</div>
+
+<div class="card" style="margin-top: 30px">
+	<div class="card-body">
+		<table class="table table-hover nowrap" id="example" style="width:100%">
+			<thead>
+				<tr>
+					<th>Học kì</th>
+					<th>Mã môn học</th>
+					<th>Tên môn học</th>
+					<th>Số tính chỉ</th>
+					<th>Lý thuyết</th>
+					<th>Thực hành</th>
+					<th>Ghi chú</th>
+					<th class="ctdt">CTDT</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				@foreach (var item in ViewBag.CTDT)
+
+				{
+					<tr>
+						<td>@item.Ma_HK</td>
+						<td>@item.Ma_Mon</td>
+						<td>@item.Ten_Mon</td>
+						<td>@item.So_TC</td>
+						<td>@item.TC_LyThuyet</td>
+						<td>@item.TC_ThucHanh</td>
+						<td>@item.Ghi_Chu</td>
+						<td>@item.Ma_CTDT</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+@*javascript*@
+
+@section ClientScript{
+	<script>
+		$(document).ready(function () {
+			var table = $('#example').DataTable({
+				responsive: true,
+				"lengthMenu": [[20, 40, 50, -1], [20, 40, 50, "All"]],
+				"pagingType": "first_last_numbers",
+				"showNEntries": false,
+				"bInfo": false,
+				"autoWidth": true,
+				lengthChange: false,
+				buttons: [
+			
+					{ extend: 'excel', filename: 'Chương trình đào tạo - @Session["name"]', messageTop:'Chương trình đào tạo - @Session["name"]' },
+					{ extend: 'pdf', filename: 'Chương trình đào tạo - @Session["name"]' },
+					{ extend: 'print', filename: 'Chương trình đào tạo - @Session["name"]', title: 'Chương trình đào tạo - @Session["name"]' },
+					'colvis'
+				]
+			});
+			table.buttons().container()
+				.appendTo('#example_wrapper .col-md-6:eq(0)');
+			$('.buttons-colvis').html("Loại cột");
+		});
+		
+	</script>
+}
+
+<style>
+	.blocker {
+		z-index: 99;
+	}
+	*{
+		font-family: serif;
+	}
+</style>

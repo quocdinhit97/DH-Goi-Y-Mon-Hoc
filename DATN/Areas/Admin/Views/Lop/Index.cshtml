@@ -1,0 +1,281 @@
+﻿@model DATN.LOP
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card text-center">
+	<div class="page-header" style="margin:7px">
+		<h3 class="page-title">
+			Lớp
+		</h3>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<a class="btn btn-block btn-lg btn-gradient-primary text-white" onclick="showDialog()">+ Add Lớp</a>
+			</ol>
+		</nav>
+	</div>
+</div>
+
+@*Show lỗi*@
+@{
+	if (TempData["LOP_ERR"] != null)
+	{
+		<div class="card text-center" style="background:none; margin-top: 20px" id="err_alert">
+			<div class="alert alert-danger alert-dismissible fade show" style="margin-bottom:0; padding:20px">
+				<strong>Lỗi: </strong> @Html.Raw(TempData["LOP_ERR"])
+				<button type="button" class="close" id="close_alert">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	}
+	if (TempData["LOP_SUCCESS"] != null)
+	{
+		<div class="card text-center" style="background:none; margin-top: 20px" id="err_alert">
+			<div class="alert alert-success alert-dismissible fade show" style="margin-bottom:0; padding:20px">
+				<strong>Thông báo: </strong> @Html.Raw(TempData["LOP_SUCCESS"])
+				<button type="button" class="close" id="close_alert">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+	}
+}
+<div class="card modal" id="ex2">
+	<div class="card-body">
+		@using (Html.BeginForm("EditLop", "Lop", FormMethod.Post))
+		{
+			@Html.AntiForgeryToken()
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label"> Mã Lớp </label>
+						<div class="col-sm-8">
+							@Html.EditorFor(model => model.Ma_Lop, new { htmlAttributes = new { @class = "form-control", id = "maLop", Readonly = true } })
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label"> Tên Lớp </label>
+						<div class="col-sm-8">
+							@Html.EditorFor(model => model.Ten_Lop, new { htmlAttributes = new { @class = "form-control", id = "tenLop" } })
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label"> Bật </label>
+						<div class="col-sm-8">
+							@Html.DropDownListFor(model => model.Bat, ViewBag.ListBat as SelectList, new { @class = "form-control", id = "bat" })
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label"> CTDT </label>
+						<div class="col-sm-8">
+							@Html.DropDownListFor(model => model.Ma_CTDT, ViewBag.ListCTDT as SelectList, new { @class = "form-control", id = "maCTDT" })
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<div class="form-group row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-8">
+					<div class="col-md-offset-2 col-md-12 text-right">
+						<input type="submit" value="Edit" class="btn btn-gradient-primary btn-rounded btn-fw" />
+					</div>
+				</div>
+			</div>
+
+		}
+	</div>
+</div>
+
+<div class="card modal" id="ex1">
+	<div class="card-body">
+		@using (Html.BeginForm("AddLop", "Lop", FormMethod.Post))
+		{
+			@Html.AntiForgeryToken()
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label"> Mã Lớp </label>
+						<div class="col-sm-8">
+							@Html.EditorFor(model => model.Ma_Lop, new { htmlAttributes = new { @class = "form-control" } })
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label"> Tên Lớp </label>
+						<div class="col-sm-8">
+							@Html.EditorFor(model => model.Ten_Lop, new { htmlAttributes = new { @class = "form-control" } })
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label"> Bật </label>
+						<div class="col-sm-8">
+							@Html.DropDownListFor(model => model.Bat, ViewBag.ListBat as SelectList, new { @class = "form-control" })
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label"> CTDT </label>
+						<div class="col-sm-8">
+							@Html.DropDownListFor(model => model.Ma_CTDT, ViewBag.ListCTDT as SelectList, new { @class = "form-control" })
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<div class="form-group row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-8">
+					<div class="col-md-offset-2 col-md-12 text-right">
+						<input type="submit" value="Create" class="btn btn-gradient-primary btn-rounded btn-fw" />
+					</div>
+				</div>
+			</div>
+
+		}
+	</div>
+</div>
+
+
+
+@{
+
+	<div class="card" style="margin-top: 30px">
+		<div class="card-body">
+			<table class="table table-hover nowrap" id="example" style="width:100%">
+				<thead>
+					<tr>
+						<th>Mã Lớp</th>
+						<th>Tên Lớp</th>
+						<th>Bật</th>
+						<th>Chương Trình DT</th>
+						<th>Xem CTDT</th>
+						<th>Sinh viên</th>
+						<th>Sửa</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					@foreach (var item in ViewBag.ListLop)
+
+					{
+					<tr>
+						<td>@item.Ma_Lop</td>
+						<td>@item.Ten_Lop</td>
+						<td>@item.Bat</td>
+						<td>@item.Ma_CTDT</td>
+						<td>
+							<a style="padding:0" href="@Url.Action("Xem_CTDT","Lop", new { id = item.Ma_CTDT})" class="btn ">
+								<i class="mdi mdi-calendar-multiple btn-edit" style="color: #b66dff;padding:4px 5px;font-size:20px;border: 1px solid #d8d8d8; border-radius: 20px"></i>
+							</a>
+						</td>
+
+						<td>
+							<a style="padding:0" href="@Url.Action("GetSinhVien", "Lop",new { id = item.Ma_Lop})" class="btn ">
+								<i class="mdi mdi-account-multiple" style="color: #b66dff;padding:4px 5px;font-size:20px;border: 1px solid #d8d8d8; border-radius: 20px"></i>
+							</a>
+						</td>
+
+						<td>
+							<a style="padding:0" data-id="@item.Ma_Lop" onclick="ShowdataLop('@item.Ma_Lop')" class="btn ">
+								<i class="mdi mdi-table-edit btn-edit" style="color: #b66dff;padding:4px 5px;font-size:20px;border: 1px solid #d8d8d8; border-radius: 20px"></i>
+							</a>
+						</td>
+					</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+}
+
+@section ClientScript{
+	<script>
+		$(document).ready(function () {
+			var table = $('#example').DataTable({
+				responsive: true,
+				"lengthMenu": [[20, 40, 50, -1], [20, 40, 50, "All"]],
+				"pagingType": "first_last_numbers",
+				"showNEntries": false,
+				"bInfo": false,
+				"autoWidth": true
+			});
+
+		});
+
+		function showDialog() {
+			$('#ex1').modal({
+				showClose: false,
+				fadeDuration: 200,
+			});
+		}
+
+
+		function ShowdataLop(idLop) {
+			$('#ex2').modal({
+				showClose: false,
+				fadeDuration: 200,
+			});
+			var url = "/Lop/showLop?idLop=" + idLop;
+			$.ajax({
+				type: "GET",
+				url: url,
+				success: function (data) {
+					var obj = JSON.parse(data);
+					$("#maLop").val(obj._ma_lop);
+					$("#tenLop").val(obj._ten_lop);
+					$("#bat").val(obj._bat);
+					$("#maCTDT").val(obj._CTDT);
+				}
+
+			});
+		}
+
+		$('#close_alert').click(function () {
+			$('#err_alert').fadeTo(100, 500).slideUp(500, function () {
+				$("#err_alert").alert('close');
+			});
+		});
+	</script>
+}
+
+<style>
+	.blocker {
+		z-index: 99;
+	}
+</style>
+

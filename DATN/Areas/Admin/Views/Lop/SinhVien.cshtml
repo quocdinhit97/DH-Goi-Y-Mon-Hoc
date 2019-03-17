@@ -1,0 +1,102 @@
+﻿
+@{
+	ViewBag.Title = "SinhVien";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card text-center">
+	<div class="page-header" style="margin:7px">
+		<h3 class="page-title">
+			Danh sách sinh viên lớp: @ViewBag.MaLop
+		</h3>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item active">Sinh Viên</li>
+				<li class="breadcrumb-item active">@ViewBag.MaLop</li>
+				<li class="breadcrumb-item"><a href="@Url.Action("index","Lop")">Lớp</a></li>
+				
+			</ol>
+		</nav>
+	</div>
+</div>
+
+@{
+	if (Enumerable.Count(ViewBag.GetSinhVien) > 0)
+	{
+		<div class="card" style="margin-top: 30px">
+			<div class="card-body">
+				<table class="table table-hover nowrap" id="example" style="width:100%">
+					<thead>
+						<tr>
+							<th>Mã Sinh Viên</th>
+							<th>Tên</th>
+							<th>Địa chỉ</th>
+							<th>Số Điện thoại</th>
+							<th>Lớp</th>
+							<th>Xem Điểm</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						@foreach (var item in ViewBag.GetSinhVien)
+
+						{
+						<tr>
+							<td>@item.Ma_SV</td>
+							<td>@item.Ten_SV</td>
+							<td>@item.Dia_Chi</td>
+							<td>@item.SDT</td>
+							<td>@item.Ma_Lop</td>
+							<td>
+								<a style="padding:0" href="@Url.Action("Xem_Diem","Lop", new { id = item.Ma_SV})" class="btn ">
+									<i class="mdi mdi-calendar-multiple btn-edit" style="color: #b66dff;padding:4px 5px;font-size:20px;border: 1px solid #d8d8d8; border-radius: 20px"></i>
+								</a>
+							</td>
+						</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	}
+	else
+	{
+		<div class="card" style="margin-top: 30px">
+			<div class="card-body">
+				<table class="table table-hover nowrap" id="example" style="width:100%">
+					<thead>
+						<tr>
+							<th>Mã Sinh Viên</th>
+							<th>Tên</th>
+							<th>Địa chỉ</th>
+							<th>Số Điện thoại</th>
+							<th>Lớp</th>
+							<th>Xem Điểm</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td style="text-align:center" colspan="6">Không tìm thấy sinh viên.</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	}
+}
+
+
+@section ClientScript{
+	<script>
+		$(document).ready(function () {
+			var table = $('#example').DataTable({
+				responsive: true,
+				"lengthMenu": [[20, 40, 50, -1], [20, 40, 50, "All"]],
+				"pagingType": "first_last_numbers",
+				"showNEntries": false,
+				"bInfo": false,
+				"autoWidth": true
+			});
+
+		});
+
+	</script>
+}
